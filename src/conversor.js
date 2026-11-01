@@ -17,6 +17,18 @@ function pendiente(nombre) {
   throw new Error(`Pendiente de implementar: ${nombre}`);
 }
 
+function validarEnteroNoNegativo(valor, nombre) {
+  if (!Number.isInteger(valor) || valor < 0) {
+    throw new Error(`${nombre} debe ser un número entero igual o mayor que 0`);
+  }
+}
+
+function validarPositivo(valor, nombre) {
+  if (!(valor > 0)) {
+    throw new Error(`${nombre} debe ser mayor que 0`);
+  }
+}
+
 /**
  * Convierte horas, minutos y segundos a segundos totales.
  * Válido: enteros >= 0, con minutos < 60 y segundos < 60.
