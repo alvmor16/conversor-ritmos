@@ -42,7 +42,6 @@ export function partesASegundos(h, m, s) {
   if (m >= 60) throw new Error("Los minutos deben ser menores que 60");
   if (s >= 60) throw new Error("Los segundos deben ser menores que 60");
   return h * 3600 + m * 60 + s;
-
 }
 
 /**
