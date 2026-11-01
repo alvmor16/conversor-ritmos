@@ -1,0 +1,8 @@
+{
+  "name": "conversor-ritmos",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

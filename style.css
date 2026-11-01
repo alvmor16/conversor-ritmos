@@ -1,0 +1,128 @@
+:root {
+  --fondo: #e1ecf0;
+  --caja: #ffffff;
+  --texto: #1b2a30;
+  --gris: #6b7b82;
+  --acento: #2b6f85;
+  --rojo: #c0392b;
+  --calculado: #d6f0dc;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+  text-align: center;
+}
+
+h1 { font-size: 1.5rem; margin: 0.5rem 0; }
+.intro { color: var(--gris); margin: 0 0 1rem; }
+
+.unidades {
+  display: inline-flex;
+  border: 2px solid var(--texto);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.unidades button {
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.5rem 1.1rem;
+  border: 0;
+  background: transparent;
+  color: var(--texto);
+}
+.unidades button.activa { background: var(--texto); color: #fff; }
+
+.grupos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2.5rem;
+}
+
+fieldset { border: 0; margin: 0; padding: 0; }
+legend {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--gris);
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.fila { display: flex; align-items: flex-start; justify-content: center; gap: 0.35rem; }
+.campo { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.campo label { color: var(--gris); font-size: 0.9rem; }
+.sep { font-size: 1.6rem; font-weight: 700; color: var(--gris); padding-top: 0.8rem; }
+.unidad-ritmo { color: var(--gris); font-size: 1.1rem; padding-top: 1.1rem; margin-left: 0.2rem; }
+
+/* 16px o más evita el zoom automático de iOS al enfocar un campo */
+input[type="text"], input:not([type]) {
+  width: 4.2rem;
+  height: 4.4rem;
+  font: inherit;
+  font-size: 1.8rem;
+  text-align: center;
+  color: var(--texto);
+  background: var(--caja);
+  border: 2px solid #b8c7cd;
+  border-radius: 6px;
+  padding: 0;
+}
+input:focus { outline: 3px solid var(--acento); outline-offset: 1px; }
+fieldset.calculado input { background: var(--calculado); border-color: #5aa070; }
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 0.9rem;
+  margin-top: 0.7rem;
+  color: var(--gris);
+  font-size: 0.95rem;
+}
+.presets label { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0; }
+.presets input { width: 1.1rem; height: 1.1rem; margin: 0; }
+
+.acciones { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
+.boton {
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 11rem;
+  padding: 0.9rem 1rem;
+  background: transparent;
+  color: var(--texto);
+  border: 2px solid var(--texto);
+  text-transform: uppercase;
+}
+.boton:active { background: var(--texto); color: #fff; }
+
+#resultado { margin-top: 1.5rem; }
+.error { color: var(--rojo); font-weight: 600; margin: 0 0 1rem; }
+#extras p { margin: 0.3rem 0; font-size: 1.1rem; }
+#extras h2 { font-size: 1.05rem; color: var(--gris); margin: 1.25rem 0 0.4rem; text-transform: uppercase; }
+#extras table { margin: 0 auto; border-collapse: collapse; }
+#extras td { padding: 0.35rem 0.9rem; text-align: left; border-bottom: 1px solid #c3d3d9; }
+#extras td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+#extras small { display: block; color: var(--gris); margin-top: 0.6rem; }
+
+@media (max-width: 420px) {
+  input[type="text"], input:not([type]) { width: 3.7rem; height: 4rem; }
+}

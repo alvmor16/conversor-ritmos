@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Conversor de ritmos</title>
+  <meta name="theme-color" content="#e1ecf0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ritmos">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Calcula tu ritmo</h1>
+    <p class="intro">Rellena dos de los tres campos y pulsa <strong>Calcular</strong>.</p>
+
+    <div class="unidades" role="group" aria-label="Unidad de distancia">
+      <button type="button" id="u-km" class="activa" aria-pressed="true">Kilómetros</button>
+      <button type="button" id="u-mi" aria-pressed="false">Millas</button>
+    </div>
+
+    <form id="form" novalidate autocomplete="off">
+      <div class="grupos">
+        <fieldset id="g-dist">
+          <legend>Distancia</legend>
+          <div class="fila">
+            <div class="campo">
+              <input id="dist-a" inputmode="decimal" placeholder="00" aria-labelledby="lbl-dist-a">
+              <label id="lbl-dist-a" for="dist-a">Km</label>
+            </div>
+            <span class="sep">:</span>
+            <div class="campo">
+              <input id="dist-b" inputmode="decimal" placeholder="00" aria-labelledby="lbl-dist-b">
+              <label id="lbl-dist-b" for="dist-b">m</label>
+            </div>
+          </div>
+          <div class="presets" role="radiogroup" aria-label="Distancias habituales">
+            <label><input type="radio" name="preset" value="5"> 5k</label>
+            <label><input type="radio" name="preset" value="10"> 10 km</label>
+            <label><input type="radio" name="preset" value="21.0975"> ½ maratón</label>
+            <label><input type="radio" name="preset" value="42.195"> Maratón</label>
+          </div>
+        </fieldset>
+
+        <fieldset id="g-tiempo">
+          <legend>Tiempo</legend>
+          <div class="fila">
+            <div class="campo">
+              <input id="t-h" inputmode="numeric" placeholder="00" aria-labelledby="lbl-t-h">
+              <label id="lbl-t-h" for="t-h">horas</label>
+            </div>
+            <span class="sep">:</span>
+            <div class="campo">
+              <input id="t-m" inputmode="numeric" placeholder="00" aria-labelledby="lbl-t-m">
+              <label id="lbl-t-m" for="t-m">min</label>
+            </div>
+            <span class="sep">:</span>
+            <div class="campo">
+              <input id="t-s" inputmode="numeric" placeholder="00" aria-labelledby="lbl-t-s">
+              <label id="lbl-t-s" for="t-s">seg</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="g-ritmo">
+          <legend>Ritmo</legend>
+          <div class="fila">
+            <div class="campo">
+              <input id="r-m" inputmode="numeric" placeholder="00" aria-labelledby="lbl-r-m">
+              <label id="lbl-r-m" for="r-m">min</label>
+            </div>
+            <span class="sep">:</span>
+            <div class="campo">
+              <input id="r-s" inputmode="numeric" placeholder="00" aria-labelledby="lbl-r-s">
+              <label id="lbl-r-s" for="r-s">seg</label>
+            </div>
+            <span class="unidad-ritmo" id="lbl-ritmo-unidad">/km</span>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="acciones">
+        <button type="submit" class="boton">Calcular</button>
+        <button type="button" id="borrar" class="boton">Borrar datos</button>
+      </div>
+    </form>
+
+    <section id="resultado" aria-live="polite">
+      <p id="error" class="error" hidden></p>
+      <div id="extras"></div>
+    </section>
+  </main>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
