@@ -24,7 +24,13 @@ function pendiente(nombre) {
  * Pista: Number.isInteger(x) comprueba que es un entero.
  */
 export function partesASegundos(h, m, s) {
-  pendiente("partesASegundos");
+  validarEnteroNoNegativo(h, "Las horas");
+  validarEnteroNoNegativo(m, "Los minutos");
+  validarEnteroNoNegativo(s, "Los segundos");
+  if (m >= 60) throw new Error("Los minutos deben ser menores que 60");
+  if (s >= 60) throw new Error("Los segundos deben ser menores que 60");
+  return h * 3600 + m * 60 + s;
+
 }
 
 /**
@@ -32,45 +38,59 @@ export function partesASegundos(h, m, s) {
  * Cuidado con el redondeo: 59.6 segundos son { h: 0, m: 1, s: 0 }, no s: 60.
  */
 export function segundosAPartes(segundos) {
-  pendiente("segundosAPartes");
+  const total = Math.round(segundos); // primero se redondea, después se reparte
+  return {
+    h: Math.floor(total / 3600),
+    m: Math.floor((total % 3600) / 60),
+    s: total % 60,
+  };
+
 }
 
 /** Ritmo en segundos por km. Lanza Error si la distancia o el tiempo <= 0. */
 export function calcularRitmo(distanciaKm, tiempoSeg) {
-  pendiente("calcularRitmo");
+  validarPositivo(distanciaKm, "La distancia");
+  validarPositivo(tiempoSeg, "El tiempo");
+  return tiempoSeg / distanciaKm;
+
 }
 
 /** Tiempo total en segundos. Lanza Error si algún valor <= 0. */
 export function calcularTiempo(distanciaKm, ritmoSegKm) {
-  pendiente("calcularTiempo");
+  validarPositivo(distanciaKm, "La distancia");
+  validarPositivo(ritmoSegKm, "El ritmo");
+  return distanciaKm * ritmoSegKm;
 }
 
 /** Distancia en km. Lanza Error si algún valor <= 0. */
 export function calcularDistancia(tiempoSeg, ritmoSegKm) {
-  pendiente("calcularDistancia");
+  validarPositivo(tiempoSeg, "El tiempo");
+  validarPositivo(ritmoSegKm, "El ritmo");
+  return tiempoSeg / ritmoSegKm;
 }
 
 /** Convierte un ritmo (seg/km) a velocidad en km/h. */
 export function ritmoAVelocidad(ritmoSegKm) {
-  pendiente("ritmoAVelocidad");
+  validarPositivo(ritmoSegKm, "El ritmo");
+  return 3600 / ritmoSegKm; // km/h
 }
 
 export function kmAMillas(km) {
-  pendiente("kmAMillas");
+  return km / KM_POR_MILLA;
 }
 
 export function millasAKm(millas) {
-  pendiente("millasAKm");
+  return millas * KM_POR_MILLA;
 }
 
 /** Ritmo de seg/km a seg/milla. */
 export function ritmoKmAMilla(ritmoSegKm) {
-  pendiente("ritmoKmAMilla");
+  return ritmoSegKm * KM_POR_MILLA; // una milla es más larga, tarda más
 }
 
 /** Ritmo de seg/milla a seg/km. */
 export function ritmoMillaAKm(ritmoSegMilla) {
-  pendiente("ritmoMillaAKm");
+  return ritmoSegMilla / KM_POR_MILLA;
 }
 
 // ---------- Extras (cuando todo lo anterior pase) ----------
@@ -82,10 +102,20 @@ export function ritmoMillaAKm(ritmoSegMilla) {
  * [{km:1, seg:300}, {km:2, seg:600}, {km:2.5, seg:750}]
  */
 export function tablaParciales(distanciaKm, ritmoSegKm) {
-  pendiente("tablaParciales");
+  validarPositivo(distanciaKm, "La distancia");
+  validarPositivo(ritmoSegKm, "El ritmo");
+  const parciales = [];
+  for (let km = 1; km < distanciaKm; km++) {
+    parciales.push({ km, seg: km * ritmoSegKm });
+  }
+  parciales.push({ km: distanciaKm, seg: distanciaKm * ritmoSegKm });
+  return parciales;
 }
 
 /** Fórmula de Riegel: T2 = T1 * (D2 / D1) ** 1.06 */
 export function predecirTiempoRiegel(tiempo1Seg, dist1Km, dist2Km) {
-  pendiente("predecirTiempoRiegel");
+  validarPositivo(tiempo1Seg, "El tiempo");
+  validarPositivo(dist1Km, "La distancia de partida");
+  validarPositivo(dist2Km, "La distancia objetivo");
+  return tiempo1Seg * (dist2Km / dist1Km) ** 1.06;
 }
