@@ -9,9 +9,9 @@ const ARCHIVOS = [
   "./src/app.js",
   "./src/conversor.js",
   "./src/resolver.js",
-  "./icons/icon-180-v2.png",
-  "./icons/icon-192-v2.png",
-  "./icons/icon-512-v2.png",
+  "./icons/icon-180-v3.png",
+  "./icons/icon-192-v3.png",
+  "./icons/icon-512-v3.png",
 ];
 
 self.addEventListener("install", (e) => {
