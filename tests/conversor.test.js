@@ -87,3 +87,10 @@ test("tablaParciales", () => {
 test("predecirTiempoRiegel", () => {
   casi(c.predecirTiempoRiegel(1200, 5, 10), 1200 * 2 ** 1.06, 1e-6);
 });
+
+test("velocidadARitmo", () => {
+  casi(c.velocidadARitmo(12), 300);
+  casi(c.velocidadARitmo(10), 360);
+  falla(() => c.velocidadARitmo(0));
+  falla(() => c.velocidadARitmo(-5));
+});
