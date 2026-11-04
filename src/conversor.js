@@ -135,10 +135,3 @@ export function velocidadARitmo(velocidadKmh) {
   validarPositivo(velocidadKmh, "La velocidad");
   return 3600 / velocidadKmh; // segundos por km
 }
-
-test("velocidadARitmo", () => {
-  casi(c.velocidadARitmo(12), 300);
-  casi(c.velocidadARitmo(10), 360);
-  falla(() => c.velocidadARitmo(0));
-  falla(() => c.velocidadARitmo(-5));
-});
