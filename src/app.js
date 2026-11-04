@@ -11,6 +11,9 @@ const campos = {
 const fieldsets = { dist: $("g-dist"), tiempo: $("g-tiempo"), ritmo: $("g-ritmo") };
 const radios = document.querySelectorAll('input[name="preset"]');
 
+// Calculadora ritmo <-> velocidad
+const rv = { m: $("rv-m"), s: $("rv-s"), v: $("rv-v"), msg: $("rv-msg") };
+
 let unidad = "km"; // "km" | "mi"
 let ultimoCalculado = null; // grupo que rellenó la app en el último cálculo
 
@@ -55,14 +58,16 @@ function borrar() {
 
 function ponerUnidad(nueva) {
   unidad = nueva;
-  $("u-km").classList.toggle("activa", nueva === "km");
-  $("u-mi").classList.toggle("activa", nueva === "mi");
-  $("u-km").setAttribute("aria-pressed", String(nueva === "km"));
-  $("u-mi").setAttribute("aria-pressed", String(nueva === "mi"));
-  $("lbl-dist-a").textContent = nueva === "km" ? "Km" : "mi";
-  $("lbl-dist-b").textContent = nueva === "km" ? "m" : "yd";
-  $("lbl-ritmo-unidad").textContent = nueva === "km" ? "/km" : "/mi";
+  const km = nueva === "km";
+  $("lbl-dist-a").textContent = km ? "Km" : "mi";
+  $("lbl-dist-b").textContent = km ? "m" : "yd";
+  $("lbl-ritmo-unidad").textContent = km ? "/km" : "/mi";
+  $("rv-unidad-ritmo").textContent = km ? "/km" : "/mi";
+  $("rv-lbl-v").textContent = km ? "km/h" : "mph";
+  $("pie-unidad").textContent = km ? "Unidades: kilómetros" : "Unidades: millas";
+  $("u-toggle").textContent = km ? "usar millas" : "usar kilómetros";
   borrar(); // los valores escritos no tendrían sentido en la otra unidad
+  borrarRv();
 }
 
 // ---------- mostrar resultados ----------
@@ -139,6 +144,65 @@ function calcular() {
   }
 }
 
+// ---------- ritmo <-> velocidad ----------
+// La relación es la misma en km y en millas: 3600 / ritmo en segundos.
+// (min/km <-> km/h, o min/mi <-> mph)
+
+function numeroRv(texto) {
+  const t = texto.trim().replace(",", ".");
+  if (t === "") return 0;
+  if (!/^\d+(\.\d+)?$/.test(t)) throw new Error("Escribe solo números");
+  return Number(t);
+}
+
+function avisoRv(texto) {
+  rv.msg.textContent = texto;
+}
+
+function borrarRv() {
+  rv.m.value = "";
+  rv.s.value = "";
+  rv.v.value = "";
+  avisoRv("");
+}
+
+function ritmoAVelocidadRv() {
+  avisoRv("");
+  if (rv.m.value.trim() === "" && rv.s.value.trim() === "") {
+    rv.v.value = "";
+    return;
+  }
+  try {
+    const seg = c.partesASegundos(0, numeroRv(rv.m.value), numeroRv(rv.s.value));
+    rv.v.value = c.ritmoAVelocidad(seg).toFixed(1);
+  } catch (e) {
+    rv.v.value = "";
+    avisoRv(e.message);
+  }
+}
+
+function velocidadARitmoRv() {
+  avisoRv("");
+  if (rv.v.value.trim() === "") {
+    rv.m.value = "";
+    rv.s.value = "";
+    return;
+  }
+  try {
+    const p = c.segundosAPartes(c.velocidadARitmo(numeroRv(rv.v.value)));
+    rv.m.value = String(p.h * 60 + p.m);
+    rv.s.value = dospuntos(p.s);
+  } catch (e) {
+    rv.m.value = "";
+    rv.s.value = "";
+    avisoRv(e.message);
+  }
+}
+
+rv.m.addEventListener("input", ritmoAVelocidadRv);
+rv.s.addEventListener("input", ritmoAVelocidadRv);
+rv.v.addEventListener("input", velocidadARitmoRv);
+
 // ---------- eventos ----------
 
 $("form").addEventListener("submit", (e) => {
@@ -146,8 +210,7 @@ $("form").addEventListener("submit", (e) => {
   calcular();
 });
 $("borrar").addEventListener("click", borrar);
-$("u-km").addEventListener("click", () => unidad !== "km" && ponerUnidad("km"));
-$("u-mi").addEventListener("click", () => unidad !== "mi" && ponerUnidad("mi"));
+$("u-toggle").addEventListener("click", () => ponerUnidad(unidad === "km" ? "mi" : "km"));
 
 // Si el usuario edita un grupo, deja de ser "calculado"
 for (const g of Object.keys(campos)) {

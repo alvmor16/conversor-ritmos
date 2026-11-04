@@ -18,11 +18,6 @@
     <h1>Calcula tu ritmo</h1>
     <p class="intro">Rellena dos de los tres campos y pulsa <strong>Calcular</strong>.</p>
 
-    <div class="unidades" role="group" aria-label="Unidad de distancia">
-      <button type="button" id="u-km" class="activa" aria-pressed="true">Kilómetros</button>
-      <button type="button" id="u-mi" aria-pressed="false">Millas</button>
-    </div>
-
     <form id="form" novalidate autocomplete="off">
       <div class="grupos">
         <fieldset id="g-dist">
@@ -93,6 +88,44 @@
       <p id="error" class="error" hidden></p>
       <div id="extras"></div>
     </section>
+
+    <section id="rv" class="tarjeta" aria-labelledby="rv-titulo">
+      <h2 id="rv-titulo">Ritmo ↔ velocidad</h2>
+      <p class="intro">Escribe uno y se calcula el otro al momento.</p>
+      <div class="grupos">
+        <fieldset>
+          <legend>Ritmo</legend>
+          <div class="fila">
+            <div class="campo">
+              <input id="rv-m" inputmode="numeric" placeholder="00" aria-labelledby="rv-lbl-m">
+              <label id="rv-lbl-m" for="rv-m">min</label>
+            </div>
+            <span class="sep">:</span>
+            <div class="campo">
+              <input id="rv-s" inputmode="numeric" placeholder="00" aria-labelledby="rv-lbl-s">
+              <label id="rv-lbl-s" for="rv-s">seg</label>
+            </div>
+            <span class="unidad-ritmo" id="rv-unidad-ritmo">/km</span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Velocidad</legend>
+          <div class="fila">
+            <div class="campo">
+              <input id="rv-v" class="ancho" inputmode="decimal" placeholder="0.0" aria-labelledby="rv-lbl-v">
+              <label id="rv-lbl-v" for="rv-v">km/h</label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <p id="rv-msg" class="aviso" aria-live="polite"></p>
+    </section>
+
+    <footer class="pie">
+      <span id="pie-unidad">Unidades: kilómetros</span> ·
+      <button type="button" id="u-toggle" class="enlace">usar millas</button>
+    </footer>
   </main>
   <script type="module" src="src/app.js"></script>
 </body>
