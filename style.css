@@ -126,3 +126,20 @@ fieldset.calculado input { background: var(--calculado); border-color: #5aa070; 
 @media (max-width: 420px) {
   input[type="text"], input:not([type]) { width: 3.7rem; height: 4rem; }
 }
+
+/* ----- Pie de unidades (discreto) ----- */
+.pie { margin-top: 2rem; color: var(--gris); font-size: 0.85rem; }
+.enlace {
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0.4rem;
+  color: var(--gris);
+  text-decoration: underline;
+}
+
+/* ----- Ritmo <-> velocidad ----- */
+.tarjeta { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 2px solid #c3d3d9; }
+.tarjeta h2 { font-size: 1.3rem; margin: 0 0 0.3rem; }
+.aviso { color: var(--gris); font-size: 0.95rem; min-height: 1.4rem; margin: 0.8rem 0 0; }
+input.ancho { width: 6.2rem; }
